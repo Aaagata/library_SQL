@@ -1,0 +1,91 @@
+{% extends "index.html" %}
+
+{% block head %} <title>Books on a shelf</title> {% endblock %}
+
+{% block body %}
+<a name="top"></a>
+<h1> Book Library</h1>
+<div class="row">
+    <!-- Adding section -->
+    <div class="column1">
+        <div class="adding_panel">
+            <div class="book_adding">
+                <h3>New Book</h3>
+                <form action="/book/" method="post">
+                    <p><input type="text" name="title" placeholder="Title..."></p>
+                    <p><input type="text" name="genre" placeholder="Genre..."></p>
+                    <p><input type="text" name="pages" placeholder="Pages..."></p>
+                    <input type="submit" value="Add Book">
+                </form>
+            </div>
+            <div class="author_adding">
+                <h3>New Author</h3>
+                <form action="/author/" method="post">
+                    <p><input type="text" name="name" placeholder="Name"></p>
+                    <p><input type="text" name="surname" placeholder="Surname"></p>
+                    <input type="submit" value="Add Author">
+                </form>
+            </div>
+        </div><br><br><br>
+        <!-- Assign section -->
+        <div class="column">
+            <h3>Assign Author to Book</h3>
+            <form action="/assign/" method="post">
+                <p><input type="text" name="author_id" placeholder="Author ID"></p>
+                <p><input type="text" name="books_id" placeholder="Book ID"></p>
+                <input type="submit" value="Assign Book">
+            </form>
+            <table class="ids">
+                <tr>
+                    <th>Author</th>
+                    <th>Author ID</th>
+                </tr>
+                {% for author in authors %}
+                <tr>
+                    <td>{{ author }}</td>
+                    <td>{{ author.id }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <th>Book</th>
+                    <th>Book ID</th>
+                    {% for book in books %}
+                </tr>
+                <td>{{ book }}</td>
+                <td>{{ book.id }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <!-- Book Shelf section -->
+    <div class="column2">
+        <div class="book_disply">
+            <h2>Book shelf</h2>
+            </h4>
+            <table>
+                <tr>
+                    <th>Author</th>
+                    <th>Book</th>
+                    
+                </tr>
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.author }}</td>
+                    <td>{% if book.stock %} <strike> {% endif %}{{ book.title }} {% if book.stock %} </strike>{%
+                        endif %}</td>
+                    <td>
+                        <button type="button" onclick='window.location.href="delete/{{ book.id }}"'>Delete Book
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <br>
+        <br>
+        <!-- Return -->
+        <button type="button" onclick='window.location.href="#top"'>BACK TO TOP</button>
+    </div>
+</div>
+{% endblock %}
